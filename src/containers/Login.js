@@ -14,15 +14,17 @@ export default function Login(props) {
   function handleSubmit(event) {
     event.preventDefault();
 
-    axios.post('https://anadea-api-sandbox.herokuapp.com/api/oauth/token', {
-      "identity": {
-        "email": email,
-        "password": password
-      },
-      "grant_type": "password"
-    })
+    axios
+      .post('https://anadea-api-sandbox.herokuapp.com/api/oauth/token', {
+        "identity": {
+          "email": email,
+          "password": password
+        },
+        "grant_type": "password"
+      })
       .then(function (response) {
         console.log(response);
+        localStorage.setItem('session', JSON.stringify({'data': response.data.data}));
         props.userHasAuthenticated(true);
       })
       .catch(function (error) {
