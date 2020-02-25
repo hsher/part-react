@@ -23,7 +23,7 @@ export default function Login(props) {
     })
       .then(function (response) {
         console.log(response);
-        alert('Logged in!')
+        props.userHasAuthenticated(true);
       })
       .catch(function (error) {
         console.log(error);
