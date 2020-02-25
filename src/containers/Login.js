@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Button, FormGroup, FormControl, ControlLabel } from "react-bootstrap";
+import axios from "axios";
 import "./Login.css";
 
 export default function Login(props) {
@@ -12,6 +13,20 @@ export default function Login(props) {
 
   function handleSubmit(event) {
     event.preventDefault();
+
+    axios.post('https://anadea-api-sandbox.herokuapp.com/api/oauth/token', {
+      "identity": {
+        "email": email,
+        "password": password
+      },
+      "grant_type": "password"
+    })
+      .then(function (response) {
+        console.log(response);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
   }
 
   return (
