@@ -1,18 +1,48 @@
 import { LinkContainer } from "react-router-bootstrap";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 import { Link } from "react-router-dom";
 import { Nav, Navbar, NavItem } from "react-bootstrap";
 import Routes from "./Routes";
 import "./App.css";
 
 function App(props) {
+  const [isAuthenticating, setIsAuthenticating] = useState(true);
   const [isAuthenticated, userHasAuthenticated] = useState(false);
 
-  function handleLogout() {
-    userHasAuthenticated(false);
+  useEffect(() => {
+    onLoad();
+  }, []);
+
+  function handleLogout(event) {
+    event.preventDefault();
+    console.log('handleLogout')
+  }
+
+
+
+
+  async function onLoad() {
+    try {
+      const token = JSON.parse(localStorage.getItem('session')).data.access_token;
+      const response = await axios.get("https://anadea-api-sandbox.herokuapp.com/api/profile", {
+        headers: { Authorization: `Bearer ${token}` }
+      })
+      const data = await response.json();
+      console.log(data)
+      userHasAuthenticated(true);
+
+      return data;
+    }
+
+    catch (error) {
+      console.log(error); // catches both errors
+      setIsAuthenticating(false);
+    }
   }
 
   return (
+    !isAuthenticating &&
     <div className="App container">
       <Navbar fluid collapseOnSelect>
         <Navbar.Header>
