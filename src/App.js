@@ -19,26 +19,32 @@ function App(props) {
     console.log('handleLogout')
   }
 
-
-
-
   async function onLoad() {
     try {
       const token = JSON.parse(localStorage.getItem('session')).data.access_token;
-      const response = await axios.get("https://anadea-api-sandbox.herokuapp.com/api/profile", {
-        headers: { Authorization: `Bearer ${token}` }
-      })
-      const data = await response.json();
-      console.log(data)
+      const token2 = "Bearer " + token;
+      console.log('token ' + token2)
+      const response = await axios.get("https://anadea-api-sandbox.herokuapp.com/api/profile",
+        {
+          headers: {
+            "accept": "application/json",
+            "Authorization": token2
+          },
+          data: {}
+        }
+      );
+
+      console.log(response)
       userHasAuthenticated(true);
 
-      return data;
+      return response.data;
     }
 
     catch (error) {
       console.log(error); // catches both errors
-      setIsAuthenticating(false);
     }
+
+    setIsAuthenticating(false);
   }
 
   return (
