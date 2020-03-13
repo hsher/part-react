@@ -36,8 +36,6 @@ function App(props) {
 
       console.log(response)
       userHasAuthenticated(true);
-
-      return response.data;
     }
 
     catch (error) {
