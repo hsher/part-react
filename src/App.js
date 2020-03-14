@@ -14,9 +14,25 @@ function App(props) {
     onLoad();
   }, []);
 
-  function handleLogout(event) {
-    event.preventDefault();
-    console.log('handleLogout')
+  async function handleLogout() {
+    try {
+      const token = JSON.parse(localStorage.getItem('session')).data.access_token;
+      const response = await axios.post("https://anadea-api-sandbox.herokuapp.com/api/oauth/revoke",
+        {
+          headers: {
+            "accept": "application/json"
+          },
+          "token": token
+        }
+      );
+
+      userHasAuthenticated(false);
+    }
+
+    catch (error) {
+      console.log(error); // catches both errors
+    }
+
   }
 
   async function onLoad() {
