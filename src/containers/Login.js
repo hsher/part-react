@@ -1,11 +1,13 @@
 import React, { useState } from "react";
-import { Button, FormGroup, FormControl, ControlLabel } from "react-bootstrap";
+import { FormGroup, FormControl, ControlLabel } from "react-bootstrap";
 import axios from "axios";
+import LoaderButton from "../components/LoaderButton";
 import "./Login.css";
 
 export default function Login(props) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
   function validateForm() {
     return email.length > 0 && password.length > 0;
@@ -13,6 +15,8 @@ export default function Login(props) {
 
   function handleSubmit(event) {
     event.preventDefault();
+
+    setIsLoading(true);
 
     axios
       .post("https://anadea-api-sandbox.herokuapp.com/api/oauth/token", {
@@ -32,6 +36,7 @@ export default function Login(props) {
       })
       .catch(function(error) {
         console.log(error);
+        setIsLoading(false);
       });
   }
 
@@ -55,9 +60,15 @@ export default function Login(props) {
             type="password"
           />
         </FormGroup>
-        <Button block bsSize="large" disabled={!validateForm()} type="submit">
+        <LoaderButton
+          block
+          type="submit"
+          bsSize="large"
+          isLoading={isLoading}
+          disabled={!validateForm()}
+        >
           Login
-        </Button>
+        </LoaderButton>
       </form>
     </div>
   );
