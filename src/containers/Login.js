@@ -25,6 +25,7 @@ export default function Login(props) {
       .then(function (response) {
         localStorage.setItem('session', JSON.stringify({'data': response.data.data}));
         props.userHasAuthenticated(true);
+        props.history.push("/");
       })
       .catch(function (error) {
         console.log(error);
