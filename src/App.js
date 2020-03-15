@@ -1,7 +1,7 @@
 import { LinkContainer } from "react-router-bootstrap";
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { Link } from "react-router-dom";
+import { Link, withRouter } from "react-router-dom";
 import { Nav, Navbar, NavItem } from "react-bootstrap";
 import Routes from "./Routes";
 import "./App.css";
@@ -29,8 +29,9 @@ function App(props) {
       );
 
       userHasAuthenticated(false);
+      props.history.push("/login");
 
-      return response
+      return response;
     } catch (error) {
       console.log(error); // catches both errors
     }
@@ -95,4 +96,4 @@ function App(props) {
   );
 }
 
-export default App;
+export default withRouter(App);
