@@ -23,7 +23,6 @@ export default function Login(props) {
         "grant_type": "password"
       })
       .then(function (response) {
-        console.log(response);
         localStorage.setItem('session', JSON.stringify({'data': response.data.data}));
         props.userHasAuthenticated(true);
       })
