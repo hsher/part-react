@@ -15,19 +15,22 @@ export default function Login(props) {
     event.preventDefault();
 
     axios
-      .post('https://anadea-api-sandbox.herokuapp.com/api/oauth/token', {
-        "identity": {
-          "email": email,
-          "password": password
+      .post("https://anadea-api-sandbox.herokuapp.com/api/oauth/token", {
+        identity: {
+          email: email,
+          password: password
         },
-        "grant_type": "password"
+        grant_type: "password"
       })
-      .then(function (response) {
-        localStorage.setItem('session', JSON.stringify({'data': response.data.data}));
+      .then(function(response) {
+        localStorage.setItem(
+          "session",
+          JSON.stringify({ data: response.data.data })
+        );
         props.userHasAuthenticated(true);
         props.history.push("/");
       })
-      .catch(function (error) {
+      .catch(function(error) {
         console.log(error);
       });
   }
