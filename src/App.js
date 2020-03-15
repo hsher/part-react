@@ -29,6 +29,8 @@ function App(props) {
       );
 
       userHasAuthenticated(false);
+
+      return response
     } catch (error) {
       console.log(error); // catches both errors
     }
