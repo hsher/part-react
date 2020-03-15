@@ -16,45 +16,44 @@ function App(props) {
 
   async function handleLogout() {
     try {
-      const token = JSON.parse(localStorage.getItem('session')).data.access_token;
-      const response = await axios.post("https://anadea-api-sandbox.herokuapp.com/api/oauth/revoke",
+      const token = JSON.parse(localStorage.getItem("session")).data
+        .access_token;
+      const response = await axios.post(
+        "https://anadea-api-sandbox.herokuapp.com/api/oauth/revoke",
         {
           headers: {
-            "accept": "application/json"
+            accept: "application/json"
           },
-          "token": token
+          token: token
         }
       );
 
       userHasAuthenticated(false);
-    }
-
-    catch (error) {
+    } catch (error) {
       console.log(error); // catches both errors
     }
-
   }
 
   async function onLoad() {
     try {
-      const token = JSON.parse(localStorage.getItem('session')).data.access_token;
+      const token = JSON.parse(localStorage.getItem("session")).data
+        .access_token;
       const token2 = "Bearer " + token;
-      console.log('token ' + token2)
-      const response = await axios.get("https://anadea-api-sandbox.herokuapp.com/api/profile",
+      console.log("token " + token2);
+      const response = await axios.get(
+        "https://anadea-api-sandbox.herokuapp.com/api/profile",
         {
           headers: {
-            "accept": "application/json",
-            "Authorization": token2
+            accept: "application/json",
+            Authorization: token2
           },
           data: {}
         }
       );
 
-      console.log(response)
+      console.log(response);
       userHasAuthenticated(true);
-    }
-
-    catch (error) {
+    } catch (error) {
       console.log(error); // catches both errors
     }
 
@@ -62,20 +61,21 @@ function App(props) {
   }
 
   return (
-    !isAuthenticating &&
-    <div className="App container">
-      <Navbar fluid collapseOnSelect>
-        <Navbar.Header>
-          <Navbar.Brand>
-            <Link to="/">Scratch</Link>
-          </Navbar.Brand>
-          <Navbar.Toggle />
-        </Navbar.Header>
-        <Navbar.Collapse>
-          <Nav pullRight>
-            {isAuthenticated
-              ? <NavItem onClick={handleLogout}>Logout</NavItem>
-              : <>
+    !isAuthenticating && (
+      <div className="App container">
+        <Navbar fluid collapseOnSelect>
+          <Navbar.Header>
+            <Navbar.Brand>
+              <Link to="/">Scratch</Link>
+            </Navbar.Brand>
+            <Navbar.Toggle />
+          </Navbar.Header>
+          <Navbar.Collapse>
+            <Nav pullRight>
+              {isAuthenticated ? (
+                <NavItem onClick={handleLogout}>Logout</NavItem>
+              ) : (
+                <>
                   <LinkContainer to="/signup">
                     <NavItem>Signup</NavItem>
                   </LinkContainer>
@@ -83,12 +83,13 @@ function App(props) {
                     <NavItem>Login</NavItem>
                   </LinkContainer>
                 </>
-            }
-          </Nav>
-        </Navbar.Collapse>
-      </Navbar>
-      <Routes appProps={{ isAuthenticated, userHasAuthenticated }} />
-    </div>
+              )}
+            </Nav>
+          </Navbar.Collapse>
+        </Navbar>
+        <Routes appProps={{ isAuthenticated, userHasAuthenticated }} />
+      </div>
+    )
   );
 }
 
