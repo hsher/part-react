@@ -2,15 +2,18 @@ import React, { useState } from "react";
 import { FormGroup, FormControl, ControlLabel } from "react-bootstrap";
 import axios from "axios";
 import LoaderButton from "../components/LoaderButton";
+import { useFormFields } from "../libs/hooksLib";
 import "./Login.css";
 
 export default function Login(props) {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [fields, handleFieldChange] = useFormFields({
+    email: "",
+    password: ""
+  });
 
   function validateForm() {
-    return email.length > 0 && password.length > 0;
+    return fields.email.length > 0 && fields.password.length > 0;
   }
 
   function handleSubmit(event) {
@@ -21,8 +24,8 @@ export default function Login(props) {
     axios
       .post("https://anadea-api-sandbox.herokuapp.com/api/oauth/token", {
         identity: {
-          email: email,
-          password: password
+          email: fields.email,
+          password: fields.password
         },
         grant_type: "password"
       })
@@ -48,15 +51,15 @@ export default function Login(props) {
           <FormControl
             autoFocus
             type="email"
-            value={email}
-            onChange={e => setEmail(e.target.value)}
+            value={fields.email}
+            onChange={handleFieldChange}
           />
         </FormGroup>
         <FormGroup controlId="password" bsSize="large">
           <ControlLabel>Password</ControlLabel>
           <FormControl
-            value={password}
-            onChange={e => setPassword(e.target.value)}
+            value={fields.password}
+            onChange={handleFieldChange}
             type="password"
           />
         </FormGroup>
