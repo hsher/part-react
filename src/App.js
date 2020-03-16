@@ -51,8 +51,7 @@ function App(props) {
           headers: {
             accept: "application/json",
             Authorization: token2
-          },
-          data: {}
+          }
         }
       );
 
