@@ -5,6 +5,7 @@ import {
   FormControl,
   ControlLabel
 } from "react-bootstrap";
+import axios from "axios";
 import LoaderButton from "../components/LoaderButton";
 import { useFormFields } from "../libs/hooksLib";
 import "./Signup.css";
@@ -36,9 +37,31 @@ export default function SignUp(props) {
 
     setIsLoading(true);
 
-    setNewUser("test");
+    try {
+      const newUser = await axios.post(
+        "https://anadea-api-sandbox.herokuapp.com/api/sign_up",
+        {
+          identity: {
+            email: fields.email,
+            password: fields.password,
+            password_confirmation: fields.confirmPassword
+          }
+        },
+        {
+          headers: {
+            accept: "application/json"
+          }
+        }
+      );
+      console.log(newUser);
+      setNewUser(newUser);
+      setIsLoading(false);
 
-    setIsLoading(false);
+      return newUser;
+    } catch (error) {
+      console.log(error); // catches both errors
+      setIsLoading(false);
+    }
   }
 
   async function handleConfirmationSubmit(event) {
