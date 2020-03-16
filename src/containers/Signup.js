@@ -57,6 +57,27 @@ export default function SignUp(props) {
       setNewUser(newUser);
       setIsLoading(false);
 
+      axios
+        .post("https://anadea-api-sandbox.herokuapp.com/api/oauth/token", {
+          identity: {
+            email: fields.email,
+            password: fields.password
+          },
+          grant_type: "password"
+        })
+        .then(function(response) {
+          localStorage.setItem(
+            "session",
+            JSON.stringify({ data: response.data.data })
+          );
+          props.userHasAuthenticated(true);
+          props.history.push("/");
+        })
+        .catch(function(error) {
+          console.log(error);
+          setIsLoading(false);
+        });
+
       return newUser;
     } catch (error) {
       console.log(error); // catches both errors
