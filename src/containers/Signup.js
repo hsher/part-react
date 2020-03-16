@@ -74,9 +74,7 @@ export default function SignUp(props) {
     return (
       <form onSubmit={handleConfirmationSubmit}>
         <FormGroup controlId="confirmationCode" bsSize="large">
-          <ControlLabel>
-            Confirmation Code
-          </ControlLabel>
+          <ControlLabel>Confirmation Code</ControlLabel>
 
           <FormControl
             autoFocus
@@ -85,9 +83,7 @@ export default function SignUp(props) {
             value={fields.confirmationCode}
           />
 
-          <HelpBlock>
-            Please check your email for the code.
-          </HelpBlock>
+          <HelpBlock>Please check your email for the code.</HelpBlock>
         </FormGroup>
 
         <LoaderButton
@@ -150,5 +146,5 @@ export default function SignUp(props) {
     <div className="Signup">
       {newUser === null ? renderForm() : renderConfirmationForm()}
     </div>
-  )
+  );
 }
