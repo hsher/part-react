@@ -28,6 +28,8 @@ function App(props) {
         }
       );
 
+      localStorage.setItem("session", JSON.stringify({ data: {} }));
+
       userHasAuthenticated(false);
       props.history.push("/login");
 
