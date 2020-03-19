@@ -9,7 +9,6 @@ export default class ChangePassword extends Component {
     this.state = {
       password: "",
       oldPassword: "",
-      isChanging: false,
       confirmPassword: ""
     };
   }
@@ -31,15 +30,12 @@ export default class ChangePassword extends Component {
   handleChangeClick = async event => {
     event.preventDefault();
 
-    this.setState({ isChanging: true });
-
     try {
 
-
+      alert('This functionality is not ready yet');
       this.props.history.push("/settings");
     } catch (e) {
       alert(e.message);
-      this.setState({ isChanging: false });
     }
   };
 
