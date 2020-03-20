@@ -13,8 +13,13 @@ import UnauthenticatedRoute from "./components/UnauthenticatedRoute";
 export default function Routes({ appProps }) {
   return (
     <Switch>
-      <AuthenticatedRoute path="/" exact component={Home} appProps={appProps} />
-      <UnauthenticatedRoute path="/login" exact component={Login} appProps={appProps} />
+      <AppliedRoute path="/" exact component={Home} appProps={appProps} />
+      <UnauthenticatedRoute
+        path="/login"
+        exact
+        component={Login}
+        appProps={appProps}
+      />
       <UnauthenticatedRoute
         path="/signup"
         exact
