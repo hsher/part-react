@@ -35,7 +35,6 @@ export default function Login(props) {
           JSON.stringify({ data: response.data.data })
         );
         props.userHasAuthenticated(true);
-        props.history.push("/");
       })
       .catch(function(error) {
         console.log(error);
