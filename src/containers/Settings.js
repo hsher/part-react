@@ -7,9 +7,7 @@ export default function Settings(props) {
   return (
     <div className="Settings">
       <LinkContainer to="/settings/password">
-        <Button>
-          Change Password
-        </Button>
+        <Button>Change Password</Button>
       </LinkContainer>
     </div>
   );
