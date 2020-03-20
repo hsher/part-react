@@ -128,9 +128,5 @@ export default function SignUp(props) {
     );
   }
 
-  return (
-    <div className="Signup">
-      {renderForm()}
-    </div>
-  );
+  return <div className="Signup">{renderForm()}</div>;
 }
