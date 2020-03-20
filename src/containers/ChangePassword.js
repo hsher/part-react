@@ -31,8 +31,7 @@ export default class ChangePassword extends Component {
     event.preventDefault();
 
     try {
-
-      alert('This functionality is not ready yet');
+      alert("This functionality is not ready yet");
       this.props.history.push("/settings");
     } catch (e) {
       alert(e.message);
