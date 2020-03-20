@@ -1,12 +1,12 @@
 import React from "react";
 import { Button } from "react-bootstrap";
 import { LinkContainer } from "react-router-bootstrap";
-import "./Settings.css";
+import "./Profile.css";
 
-export default function Settings(props) {
+export default function Profile(props) {
   return (
-    <div className="Settings">
-      <LinkContainer to="/settings/password">
+    <div className="Profile">
+      <LinkContainer to="/profile/password">
         <Button>Change Password</Button>
       </LinkContainer>
     </div>

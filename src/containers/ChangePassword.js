@@ -32,7 +32,7 @@ export default class ChangePassword extends Component {
 
     try {
       alert("This functionality is not ready yet");
-      this.props.history.push("/settings");
+      this.props.history.push("/profile");
     } catch (e) {
       alert(e.message);
     }
