@@ -1,13 +1,58 @@
-import React from "react";
+import React, { Component } from "react";
+import { Button, ListGroup, ListGroupItem } from "react-bootstrap";
+import axios from "axios";
 import "./Home.css";
 
-export default function Home() {
-  return (
-    <div className="Home">
-      <div className="lander">
-        <h1>Scratch</h1>
-        <p>A simple note taking app</p>
+export default class Home extends Component {
+  state = {
+    users: []
+  }
+
+  componentDidMount() {
+    const token = JSON.parse(localStorage.getItem("session")).data
+        .access_token;
+    const token2 = "Bearer " + token;
+
+    axios.get("https://anadea-api-sandbox.herokuapp.com/api/users",
+        {
+          headers: {
+            accept: "application/json",
+            Authorization: token2
+          }
+        }
+      )
+      .then(res => {
+        const users = res.data.data;
+        console.log(users)
+
+        this.setState({ users });
+      })
+  }
+
+  render() {
+    function renderUser(user) {
+      return (
+        <ListGroupItem>
+          <b>
+            <span>First name: </span>
+          </b>
+          <span>{user.first_name}</span>
+        </ListGroupItem>
+      );
+    }
+
+    return (
+      <div className="Home">
+        <h1>All users</h1>
+
+        <ListGroup>
+          {this.state.users.map(user => (
+            <>
+              {renderUser(user)}
+            </>
+          ))}
+        </ListGroup>
       </div>
-    </div>
-  );
+    );
+  }
 }
