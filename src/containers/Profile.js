@@ -27,6 +27,32 @@ export default class Profile extends Component {
       });
   }
 
+  handleChangeName = () => {
+    const token = JSON.parse(localStorage.getItem("session")).data.access_token;
+    const token2 = "Bearer " + token;
+
+    axios
+      .put(
+        "https://anadea-api-sandbox.herokuapp.com/api/profile",
+        {
+          user: {
+            first_name: "Firs"
+          }
+        },
+        {
+          headers: {
+            accept: "application/json",
+            Authorization: token2
+          }
+        }
+      )
+      .then(res => {
+        const profile = res.data.data;
+
+        this.setState({ profile });
+      });
+  }
+
   render() {
     return (
       <div className="Profile">
@@ -35,15 +61,15 @@ export default class Profile extends Component {
         <ListGroup>
           <ListGroupItem>
             <b>
-              <span>First name:</span>
+              <span>First name: </span>
             </b>
-            <span></span>
+            <span>{this.state.profile.first_name}</span>
           </ListGroupItem>
           <ListGroupItem>
             <b>
-              <span>Last name:</span>
+              <span>Last name: </span>
             </b>
-            <span></span>
+            <span>{this.state.profile.last_name}</span>
           </ListGroupItem>
           <ListGroupItem>
             <b>
@@ -56,6 +82,8 @@ export default class Profile extends Component {
         <LinkContainer to="/profile/password">
           <Button>Change Password</Button>
         </LinkContainer>
+
+        <Button onClick={this.handleChangeName}>Change Name</Button>
       </div>
     );
   }
