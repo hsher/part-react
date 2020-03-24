@@ -1,12 +1,13 @@
 import React, { Component } from "react";
-import { Button, ListGroup, ListGroupItem } from "react-bootstrap";
+import { Button, ListGroup, ListGroupItem,FormGroup, FormControl, ControlLabel } from "react-bootstrap";
 import axios from "axios";
 import { LinkContainer } from "react-router-bootstrap";
 import "./Profile.css";
 
 export default class Profile extends Component {
   state = {
-    profile: []
+    profile: [],
+    first_name: ""
   };
 
   componentDidMount() {
@@ -27,16 +28,17 @@ export default class Profile extends Component {
       });
   }
 
-  handleChangeName = () => {
+  handleChangeName = (event) => {
+    event.preventDefault();
+
     const token = JSON.parse(localStorage.getItem("session")).data.access_token;
     const token2 = "Bearer " + token;
-
     axios
       .put(
         "https://anadea-api-sandbox.herokuapp.com/api/profile",
         {
           user: {
-            first_name: "Firs"
+            first_name: this.state.first_name
           }
         },
         {
@@ -52,6 +54,12 @@ export default class Profile extends Component {
         this.setState({ profile });
       });
   }
+
+  handleChange = event => {
+    this.setState({
+      [event.target.id]: event.target.value
+    });
+  };
 
   render() {
     return (
@@ -84,6 +92,27 @@ export default class Profile extends Component {
         </LinkContainer>
 
         <Button onClick={this.handleChangeName}>Change Name</Button>
+        <br/>
+        <br/>
+
+        <form onSubmit={this.handleChangeName}>
+          <FormGroup bsSize="large" controlId="first_name">
+            <ControlLabel>New first name</ControlLabel>
+            <FormControl
+              type="text"
+              onChange={this.handleChange}
+              value={this.state.first_name}
+            />
+          </FormGroup>
+
+          <Button
+            block
+            type="submit"
+            bsSize="large"
+          >
+            Change First Name
+          </Button>
+        </form>
       </div>
     );
   }
