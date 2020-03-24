@@ -32,12 +32,12 @@ export default class Home extends Component {
   render() {
     function renderUser(user) {
       return (
-        <ListGroupItem>
+        <>
           <b>
             <span>First name: </span>
           </b>
           <span>{user.first_name}</span>
-        </ListGroupItem>
+        </>
       );
     }
 
@@ -47,9 +47,9 @@ export default class Home extends Component {
 
         <ListGroup>
           {this.state.users.map(user => (
-            <>
+            <ListGroupItem key={user.id}>
               {renderUser(user)}
-            </>
+            </ListGroupItem>
           ))}
         </ListGroup>
       </div>
